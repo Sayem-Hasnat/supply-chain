@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+    <div class="content-wrapper">
+
+        <!--region: Dealer NID And TIN Check-->
+        <div class="container">
+            <div class="row">
+                <div class="col col-6">
+                    <h2 class="text-center">Apply For Dealership</h2>
+                    List:
+                    <select class="applyDropdownList form-control" required>
+                        <option disabled selected>---- Select ----</option>
+                        <option th:each="apply : ${applyDtoList}"
+                                th:value="${apply.applyId}"
+                                th:text="${apply.username}">
+                        </option>
+                    </select><br>
+                    <h2 class="text-center">NID & TIN Image</h2>
+                    <div class="text-center"><img class="applyImage"/></div>
+                </div>
+                <div class="col col-6">
+                    <form class="searchNid form-control">
+
+                        NID Number: <input type="text" name="nidNo" class="form-control" placeholder="NID No."/><br>
+                        <button class="btn btn-primary" type="submit">Search</button>
+                        <div class="text-center"><img class="nidImage"/></div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- endregion -->
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: approval-jquery"></th:block> /*/-->
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+
+</body>
+</html>

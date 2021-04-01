@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+    <div class="content-wrapper">
+
+        <div class="container">
+            <div class="row">
+                <!-- region: Dealer All Requisition Information -->
+                <div class="col col-12">
+                    <h2 class="text-center">All Requisition List</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Dealer</th>
+                                        <th>Show-Product</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="table-body">
+                                    <th:block th:each="requisition:${requisitionDtoList}">
+                                        <tr>
+                                            <td class="counterCell"></td>
+                                            <td th:text="${requisition.dealer}"></td>
+                                            <td>
+                                                <button class="product-show btn btn-outline-primary"
+                                                        th:value="${requisition.requisitionId}">Products
+                                                </button>
+                                            </td>
+
+                                            <td><a th:href="@{'/inventory/check-payment/'+${requisition.requisitionId}}"
+                                                   class="btn btn-outline-info">Payment Status</a></td>
+                                        </tr>
+
+                                    </th:block>
+                                    </tbody>
+                                </table>
+
+                                <!-------------------------------------------------------------------->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- endregion -->
+
+                <!-- region: Ordered Product Quantity Information -->
+                <div class="col col-12">
+                    <div class="card">
+                        <h2 class="text-center">Ordered Products Quantity</h2>
+
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Item</th>
+                                        <th>Quantity(Carton)</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="product-table-body"></tbody>
+                                </table>
+
+                                <!-------------------------------------------------------------------->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- endregion -->
+
+            </div>
+        </div>
+        <h3 th:text="${message}" class="text-center alert-success"></h3>
+    </div>
+</div>
+<!--/*/ <th:block th:include="@{fragments/jquery} :: dealer-requisition"></th:block> /*/-->
+
+
+</body>
+</html>

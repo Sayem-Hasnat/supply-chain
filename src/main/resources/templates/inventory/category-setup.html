@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+
+    <div class="content-wrapper">
+
+        <!-- region: New Category Add form -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <h1>Add New Category</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">New Category</h3>
+                            </div>
+
+                            <form th:action="@{/inventory/save-category}" th:object="${categoryDto}" method="post">
+                                <div class="card-body">
+                                    <input type="hidden" th:field="*{categoryId}"/>
+                                    <!----------------------------------------------------------------->
+                                    <div class="form-group">
+                                        <label>Category Name</label>
+                                        <input type="text" class="form-control" th:field="*{categoryName}" required/>
+                                    </div>
+                                    <!------------------------------- Button ---------------------------------->
+                                    <div class="col-md-12 text-right">
+                                        <button th:if="${categoryDto.categoryId==0}" class="btn btn-primary"
+                                                type="submit">Save Category
+                                        </button>
+                                        <button th:Unless="${categoryDto.categoryId==0}" class="btn btn-primary"
+                                                type="submit">Update Category
+                                        </button>
+                                    </div>
+
+                                    <h5 th:text="${message}"></h5>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- endregion-->
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">All Category List</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Category Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:block th:each="category:${categoryDtoList}">
+                                        <tr>
+                                            <td th:text="${category.categoryId}"></td>
+                                            <td th:text="${category.categoryName}"></td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</div>
+
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+
+</body>
+</html>

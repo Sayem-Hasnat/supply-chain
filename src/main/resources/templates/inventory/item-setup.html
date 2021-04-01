@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+    <div class="content-wrapper">
+<!-- region: New Item Add form -->
+<div class="container">
+    <h2 class="text-center">Add New Product</h2>
+
+    <form th:action="@{/inventory/save-item}" th:object="${itemDto}" method="post" enctype="multipart/form-data" class="form-control">
+
+        Category:
+        <select th:field="*{categoryId}" class="form-control">
+            <option th:each="category : ${categoryDtoList}"
+                    th:value="${category.categoryId}"
+                    th:text="${category.categoryName}">
+            </option>
+        </select><br>
+
+        <!----------------------------------------------------------------->
+        Product Name: <input type="text" class="form-control" th:field="*{itemName}" required/><br>
+        Product Image: <input type="file" class="form-control" name="productImage" accept="image/jpeg,image/png" required/><br>
+
+        Product Per Carton: <input type="text" class="form-control" th:field="*{itemPerCarton}" required/><br>
+        Product Price Per Carton: <input type="text" class="form-control" th:field="*{pricePerCarton}" required/><br>
+        <!------------------------------- Button ---------------------------------->
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary" type="submit">Save Product</button>
+        </div>
+
+        <h5 th:text="${message}"></h5>
+
+    </form>
+</div>
+</div>
+</div>
+<!-- endregion-->
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+</body>
+</html>

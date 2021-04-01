@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+
+
+
+    <!-- region: All Wishlist Information -->
+    <div class="content-wrapper">
+        <h1 th:text="${message}" class="text-center alert-danger"></h1>
+
+        <div class="container">
+            <h2 class="text-center">Requisition Process</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                            </tr>
+                            </thead>
+
+                            <tbody class="table-body">
+                            <th:block th:each="wishlist:${wishlistDtoList}">
+                                <tr>
+                                    <td class="counterCell"></td>
+                                    <td th:text="${wishlist.item.itemName}"></td>
+                                    <td th:text="${wishlist.orderQuantity}"></td>
+                                    <td th:text="${wishlist.orderQuantityPrice}"></td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+
+                        </table>
+
+                        <!-------------------------------------------------------------------->
+
+                        Total Payable:
+                        <div class="col-md-4 float-right">
+                            <input type="text" th:value="${totalPrice}" class="form-control" readonly/><br>
+
+                            <a th:if="${totalPrice} gt 0" class="btn btn-primary" th:href="@{/dealer/checkout/}"
+                               onclick="return confirm('Place Yor Order?')" type="submit">Checkout</a><br><br>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- endregion -->
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+</body>
+</html>

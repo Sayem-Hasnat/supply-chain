@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+    <div class="content-wrapper">
+
+        <!--region: Product Stock In form-->
+        <div class="container">
+            <div class="row">
+                <div class="col col-6">
+                    <h2 class="text-center">Product Stock In</h2>
+
+                    <form class="productStockIn form-control">
+
+                        Category List:
+                        <select class="categoryDropdownList form-control" required>
+                            <option disabled selected>---- Select a Category ----</option>
+                            <option th:each="category : ${categoryDtoList}"
+                                    th:value="${category.categoryId}"
+                                    th:text="${category.categoryName}">
+                            </option>
+                        </select><br>
+
+                        Item List:
+                        <select name="itemId" class="itemDropdown form-control" required></select><br>
+
+                        Item's Current Quantity: <input type="text" class="itemQuantity form-control"
+                                                        placeholder="Item's Current Quantity" readonly/><br>
+
+                        Item Quantity: <input type="number" min="1" name="itemQuantity" class="stockNumber form-control"
+                                              placeholder="Stock Quantity" required/><br>
+
+
+                        <!------------------------------- Button ---------------------------------->
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-primary" type="submit">Add Quantity</button>
+                            <br>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- endregion -->
+
+
+<script th:src="@{/jquery/jquery-3.5.1.js}"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.categoryDropdownList').on('change', function (e) {
+            e.preventDefault();
+            $(".itemQuantity").val("Item's Current Quantity (Select Item First)");
+
+            var categoryId = $(".categoryDropdownList option:selected").val();
+
+            $.ajax({
+                url: '/inventory/get-item-list/' + categoryId,
+
+                method: 'GET',
+
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+
+                success: function (response) {
+
+                    $(".itemDropdown").empty();
+
+                    $(".itemDropdown").append(`<option disabled selected>---- Select an Item From The list ----</option>`)
+
+                    /*---------------------------- Loop For Student List -------------------------------*/
+                    $.each(response, function (i, item) {
+
+                        var option = `<option value="${item.itemId}">${item.itemName}</option>`;
+
+                        $(".itemDropdown").append(option);
+
+                    });
+
+                },
+
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        /*------------------------------------------------------------------------------*/
+
+        $('.itemDropdown').on('change', function (e) {
+            e.preventDefault();
+
+            var itemId = $(".itemDropdown option:selected").val();
+
+            $.ajax({
+                url: '/inventory/get-item-details/' + itemId,
+
+                method: 'GET',
+
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+
+                success: function (response) {
+
+                    $(".itemQuantity").val(response.itemQuantity);
+
+                },
+
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        /*------------------------------------------------------------------------------*/
+
+
+        $(".productStockIn").on('submit', function (e) {
+            e.preventDefault(); /*------- Page Reload Prevent -------*/
+            $.ajax({
+                data: JSON.stringify($(this).serializeObject()),
+                url: '/inventory/product-stock-in',    /*------- Controller And Method Map -------*/
+                method: 'POST',                  /*------- By Default GET -------*/
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                success: function (response) {
+                    $(".stockNumber").val("")
+                    $(".itemQuantity").val(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+
+        /*--------The Following Code Is For Converting Json Object To Our Requird Object --------*/
+
+        $.fn.serializeObject = function () {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+    });
+</script>
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+</head>
+<body>
+
+<div class="container">
+    <form class="form-signin" method="post" th:action="@{/apply}" th:object="${applyDto}" enctype="multipart/form-data">
+        <h2 class="form-signin-heading">Apply For Dealership</h2>
+        <p>
+            <label for="username" class="sr-only">Username</label>
+            Username: <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Username" required autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only">Password</label>
+            Password: <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Password" required>
+        </p>
+
+        <p>
+            NID & TIN Scan Copy:
+            <input type="file" class="form-control" name="nidTinImage" accept="image/jpeg,image/png" required/><br>
+        </p>
+
+        <input name="_csrf" type="hidden" value="a7b951ff-b6af-45c2-927a-f10e52dbfda6" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Apply</button>
+        <h4 th:text="${message}"></h4>
+    </form>
+
+</div>
+
+
+
+</body>
+</html>

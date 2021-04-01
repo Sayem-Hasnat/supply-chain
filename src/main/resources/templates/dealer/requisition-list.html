@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+
+    <!-- region: All Requisition Information -->
+    <div class="content-wrapper">
+        <h1 th:text="${message}" class="text-center alert-success"></h1>
+
+        <div class="container">
+            <h2 class="text-center">All Requisition List</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Requisition No.</th>
+                                <th>Payable</th>
+                                <th>Paid</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Action</th>
+
+                            </tr>
+                            </thead>
+
+                            <tbody class="table-body">
+                            <th:block th:each="requisition:${requisitionDtoList}">
+                                <tr>
+                                    <td class="counterCell"></td>
+                                    <td th:text="${requisition.requisitionNo}"></td>
+                                    <td th:text="${requisition.payable}"></td>
+                                    <td th:text="${requisition.paid}"></td>
+                                    <td th:text="${requisition.status}"></td>
+                                    <td>
+                                        <button class="payment-details btn btn-outline-primary"
+                                                th:value="${requisition.requisitionId}">Details
+                                        </button>
+                                    </td>
+
+
+                                    <td><a th:if="${requisition.paymentStatus}=='Payment Not Clear'"
+                                           class="btn btn-primary"
+                                           th:href="@{'/dealer/due-payment/'+${requisition.requisitionId}}"
+                                           type="submit">Pay Due</a></td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+
+                        </table>
+
+                        <!-------------------------------------------------------------------->
+
+                    </div>
+                </div>
+            </div>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="requisitionNo card-title">Requisition Payment Details</h3>
+
+
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>SL</th>
+                                            <th>Transaction Number</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Account</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody class="payment-table-body"></tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<!-- endregion -->
+
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: dealer-requisition-payment"></th:block> /*/-->
+</body>
+</html>

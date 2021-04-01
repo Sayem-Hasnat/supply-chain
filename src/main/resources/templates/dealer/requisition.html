@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    <!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+
+    <div class="content-wrapper">
+        <!--region: Product Stock In form-->
+        <h1 th:text="${message}" class="text-center alert-success"></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col col-6">
+                    <h2 class="text-center">Product Requisition</h2>
+
+                    <form class="productRequisition form-control">
+
+                        Category List:
+                        <select class="categoryDropdownList form-control" required>
+                            <option disabled selected>---- Select a Category ----</option>
+                            <option th:each="category : ${categoryDtoList}"
+                                    th:value="${category.categoryId}"
+                                    th:text="${category.categoryName}">
+                            </option>
+                        </select><br>
+
+                        Item List:
+                        <select name="itemId" class="itemDropdown form-control" required></select><br>
+
+                        Item's Quantity Per Carton: <input type="text" class="quantity form-control"
+                                                           placeholder="Quantity" readonly/><br>
+                        Item's Price Per Carton: <input type="text" class="itemPrice form-control" placeholder="Price"
+                                                        readonly/><br>
+
+                        Item Quantity: <input type="number" min="1" name="itemQuantity"
+                                              class="orderProduct form-control"
+                                              placeholder="Requisite Quantity" required/><br>
+
+                        <!------------------------------- Button ---------------------------------->
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-primary" type="submit">Add Quantity</button>
+                            <br>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="col col-6">
+                    <h2 class="text-center">Product Image</h2>
+                    <div class="text-center"><img class="itemImage"/></div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- endregion -->
+
+    </div>
+</div>
+<!--/*/ <th:block th:include="@{fragments/jquery} :: requisition-jquery"></th:block> /*/-->
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+</body>
+</html>

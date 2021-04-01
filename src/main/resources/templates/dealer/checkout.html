@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--/*/ <th:block th:include="@{fragments/common}::head(${title})"></th:block> /*/-->
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+<!--/*/ <th:block th:include="@{fragments/common} :: navigation"></th:block> /*/-->
+
+    <div class="content-wrapper">
+
+<!-- region: Checkout form -->
+<div class="container">
+    <h2 class="text-center">Payment For Requisition</h2>
+
+    <form th:action="@{/dealer/payment}" th:object="${transactionDto}" method="post" class="form-control">
+
+        <input type="hidden" th:field="*{transactionId}"/>
+        <!----------------------------------------------------------------->
+        Transaction No.: <input type="text" class="form-control" th:field="*{transactionNo}" readonly/><br>
+        Account No.: <input type="text" class="form-control" th:field="*{account}" required/><br>
+
+        Total Payable Amount: <input type="text" class="form-control" th:value="${payableAmount}" readonly/><br>
+        Amount: <input type="text" class="form-control" th:field="*{amount}" required/><br>
+
+        <!------------------------------- Button ---------------------------------->
+        <div class="col-md-12 text-right">
+            <button th:if="${transactionDto.transactionId==0}" class="btn btn-primary" type="submit">Payment</button>
+            <button th:Unless="${transactionDto.transactionId==0}" class="btn btn-primary" type="submit">Due Payment</button>
+        </div>
+
+        <h5 th:text="${message}"></h5>
+
+    </form>
+</div></div></div>
+
+<!-- endregion-->
+
+<!--/*/ <th:block th:include="@{fragments/jquery} :: common-jquery"></th:block> /*/-->
+
+</body>
+</html>
